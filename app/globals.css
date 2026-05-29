@@ -1,26 +1,76 @@
+/* ── Font Imports ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
 @import "tailwindcss";
 
+/* ── Design Tokens ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAFAF9;
+  --surface: #FFFFFF;
+  --accent-1: #B1A9AF;
+  --accent-2: #978787;
+  --accent-3: #334F39; /* Deep tech-forward green */
+  --text-primary: #334F39;
+  --text-secondary: #4A4A4A;
+  --text-muted: #8A8A8A;
+  --border: rgba(0, 0, 0, 0.08);
+
+  --font-primary: 'Inter', sans-serif;
 }
 
+/* ── Tailwind v4 Theme Integration ── */
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-default: var(--border);
+  --font-sans: var(--font-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base Styles ── */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Scroll Margin for Anchor Links ── */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ── Scrollbar Styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-3);
+}
+
+/* ── Selection Color ── */
+::selection {
+  background: rgba(51, 79, 57, 0.15); /* accent-3 with opacity */
+  color: var(--text-primary);
 }
