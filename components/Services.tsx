@@ -4,16 +4,16 @@ import { motion } from 'framer-motion';
 
 const services = [
   {
-    title: "Lead Generation",
-    description: "Automated social monitoring and lead scoring systems tailored for your niche."
+    title: "Custom Software Solutions",
+    description: "Software business solutions, engineered and tailored specifically to your personal business."
   },
   {
     title: "Automation Infrastructure",
-    description: "Custom n8n workflows that connect your tools and eliminate manual tasks."
+    description: "Custom workflows that connect your tools and eliminate manual administrative tasks."
   },
   {
     title: "Digital Presence",
-    description: "Clean, fast, minimal digital business cards and landing pages."
+    description: "Clean, fast, minimal digital business cards and high-converting landing pages."
   }
 ];
 
