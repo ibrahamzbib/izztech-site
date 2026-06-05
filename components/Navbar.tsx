@@ -4,66 +4,65 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
-  { label: 'Services', href: '#services', id: 'nav-services' },
-  { label: 'Process', href: '#process', id: 'nav-process' },
-  { label: 'About', href: '#about', id: 'nav-about' },
+  { label: 'Services',  href: '#services', id: 'nav-services' },
+  { label: 'Process',   href: '#process',  id: 'nav-process'  },
+  { label: 'About',     href: '#about',    id: 'nav-about'    },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
   const closeMobile = () => setMobileOpen(false);
+
+  /* Text / border colours flip based on scroll position (hero is dark) */
+  const linkColor  = scrolled ? 'text-text-secondary hover:text-text-primary' : 'text-white/60 hover:text-white';
+  const logoColor  = scrolled ? 'text-text-primary' : 'text-white';
+  const ctaBg      = scrolled ? 'bg-umber text-white hover:opacity-85' : 'border border-white/20 text-white/70 hover:bg-white/10';
 
   return (
     <>
       <nav
         id="navbar"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-          scrolled ? 'bg-background/90 backdrop-blur border-b border-border-default py-4' : 'bg-transparent py-6'
+          scrolled
+            ? 'bg-background/95 backdrop-blur border-b border-border-default py-4'
+            : 'bg-transparent py-6'
         }`}
       >
         <div className="mx-auto max-w-5xl px-6">
           <div className="flex items-center justify-between">
-            {/* ── Logo ── */}
+
+            {/* Logo */}
             <a
               id="nav-logo"
               href="#"
-              className="text-lg font-semibold tracking-tight text-text-primary transition-opacity hover:opacity-70"
+              className={`text-sm font-semibold tracking-[0.15em] uppercase transition-colors duration-300 ${logoColor}`}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
-              IZZ TECH
+              IZZ TECH INC
             </a>
 
-            {/* ── Desktop Navigation ── */}
+            {/* Desktop nav */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a
                   key={link.id}
                   id={link.id}
                   href={link.href}
-                  className="text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
+                  className={`text-sm font-medium transition-colors duration-300 ${linkColor}`}
                 >
                   {link.label}
                 </a>
@@ -71,32 +70,31 @@ export default function Navbar() {
               <a
                 id="nav-cta"
                 href="#contact"
-                className="text-sm font-medium text-accent-3 bg-accent-3/10 px-4 py-2 rounded-full transition-colors hover:bg-accent-3 hover:text-white ml-4"
+                className={`text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ml-2 ${ctaBg}`}
               >
                 Contact
               </a>
             </div>
 
-            {/* ── Mobile Hamburger ── */}
+            {/* Mobile hamburger */}
             <button
               id="mobile-menu-toggle"
-              onClick={() => setMobileOpen((prev) => !prev)}
-              className="md:hidden p-2 -mr-2 text-text-primary"
+              onClick={() => setMobileOpen((p) => !p)}
+              className={`md:hidden p-2 -mr-2 transition-colors duration-300 ${scrolled ? 'text-text-primary' : 'text-white'}`}
               aria-label="Toggle menu"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                {mobileOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                )}
+                {mobileOpen
+                  ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  : <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                }
               </svg>
             </button>
           </div>
         </div>
       </nav>
 
-      {/* ── Mobile Menu ── */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -112,7 +110,7 @@ export default function Navbar() {
                   key={link.id}
                   href={link.href}
                   onClick={closeMobile}
-                  className="text-text-secondary hover:text-text-primary font-medium"
+                  className="text-text-secondary hover:text-text-primary font-medium transition-colors"
                 >
                   {link.label}
                 </a>
@@ -120,7 +118,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={closeMobile}
-                className="text-white bg-accent-3 text-center py-3 rounded-lg font-medium mt-4"
+                className="btn-primary text-center mt-4"
               >
                 Contact
               </a>
